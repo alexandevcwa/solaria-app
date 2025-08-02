@@ -17,6 +17,7 @@ public enum Estado {
     EN("Enviado"),
     EX("Exento");
 
+    @SuppressWarnings("unused")
     private final String descripcion;
 
     Estado(String descripcion) {

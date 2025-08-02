@@ -4,6 +4,7 @@ public enum Genero {
     M("Masculino"),
     F("Femenino");
 
+    @SuppressWarnings("unused")
     private final String descripcion;
 
     Genero(String descripcion) {

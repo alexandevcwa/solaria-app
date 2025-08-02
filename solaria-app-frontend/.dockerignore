@@ -1,0 +1,45 @@
+# Archivos y directorios a ignorar al construir la imagen Docker
+
+# Dependencias de Node
+node_modules
+npm-debug.log*
+
+# Archivos de distribución
+dist
+build
+
+# Archivos de IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos de Git
+.git
+.gitignore
+
+# Archivos de pruebas
+coverage
+*.tgz
+
+# Archivos de configuración local
+.env
+.env.local
+.env.production
+
+# Archivos temporales
+*.tmp
+*.temp
+
+# Logs
+logs
+*.log
+
+# Archivos de Docker
+Dockerfile
+.dockerignore
+docker-compose.yml

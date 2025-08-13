@@ -1,16 +1,14 @@
 package com.solaria.app.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 @Getter
 @Setter
 @Entity
+@Builder
 @Table(name = "profesiones")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,6 +20,9 @@ public class Profesion {
 
     @Column(name = "prof_nom", unique = true, nullable = false, length = 50)
     private String nombre;
+
+    @Column(name = "prof_est", columnDefinition = "BOOLEAN DEFAULT TRUE", insertable = false)
+    private boolean estado;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "profesiones")
     private List<Catedratico> catedraticos;

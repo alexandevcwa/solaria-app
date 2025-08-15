@@ -1,0 +1,25 @@
+{
+	"name": "solaria-app-frontend-native",
+	"version": "1.0.0",
+	"description": "Aplicación frontend nativa de Solaria",
+	"directories": {
+		"lib": "lib"
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "npx parcel public/index.html"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"type": "module",
+	"dependencies": {
+		"@fortawesome/fontawesome-free": "^7.0.0",
+		"@tailwindcss/postcss": "^4.1.11",
+		"animate.css": "^4.1.1",
+		"axios": "^1.11.0",
+		"mocha": "^11.7.1",
+		"parcel": "^2.15.4",
+		"tailwindcss": "^4.1.11"
+	}
+}

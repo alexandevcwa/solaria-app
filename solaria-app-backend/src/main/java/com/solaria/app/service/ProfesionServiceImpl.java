@@ -50,15 +50,40 @@ public class ProfesionServiceImpl implements ProfesionService {
     @Override
     public ProfesionDto findById(Integer id) {
         Profesion profesion = profesionRepository.findById(id)
-                .orElseThrow(() -> new ServiceException(HttpStatus.NOT_FOUND,"Profesión no encontrada"));
+                .orElseThrow(() -> new ServiceException(HttpStatus.NOT_FOUND, "Profesión no encontrada"));
         return ProfesionMapper.toDto(profesion);
     }
 
     @Override
     public Iterable<ProfesionDto> findAll() {
-        List<Profesion> profesiones = profesionRepository.findAll();
-        if (profesiones.isEmpty()){
-            throw new ServiceException(HttpStatus.NOT_FOUND,"No existen profesiones registradas");
+        List<Profesion> profesiones = profesionRepository.getAllByEstado(true);
+        if (profesiones.isEmpty()) {
+            throw new ServiceException(HttpStatus.NOT_FOUND, "No existen profesiones registradas");
+        }
+        return profesiones.stream().map(ProfesionMapper::toDto).toList();
+    }
+
+    @Override
+    @Transactional
+    public void changeStatus(int id, boolean status) {
+        Profesion profesion = profesionRepository.findById(id).orElse(null);
+        if (null == profesion) {
+            throw new ServiceException(HttpStatus.BAD_REQUEST, "Profesión no existe para cambiar estado");
+        }
+        if (status == profesion.isEstado()) {
+            String msgEstado = status ? "activada" : "desactivada";
+            throw new ServiceException(HttpStatus.BAD_REQUEST, "La profesión ya se encuentra " + msgEstado);
+        }
+        profesion.setEstado(status);
+        profesionRepository.save(profesion);
+    }
+
+    @Override
+    public Iterable<ProfesionDto> getAllByStatus(boolean status) {
+
+        List<Profesion> profesiones = profesionRepository.getAllByEstado(status);
+        if (!profesiones.isEmpty()) {
+            throw new ServiceException(HttpStatus.NOT_FOUND, "No existen profesiones registradas");
         }
         return profesiones.stream().map(ProfesionMapper::toDto).toList();
     }

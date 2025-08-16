@@ -128,22 +128,27 @@ import Navbar from "../src/components/navbar";
 
 window.addEventListener("DOMContentLoaded", () => {
 	
-	const outlet = document.getElementById("app");
-	if (!outlet) return;
+	const header = document.getElementById("header-container");
+	if (!header) return;
 
 	const navbar = Navbar({
 		userName: "Usuario",
 		role: "ADMIN",
 	});
 
-	console.log(navbar)
+	header.appendChild(navbar);
+
+	const outlet = document.getElementById('app');
+
 
 	const router = createRouter({
 		outlet,
 		base: "/",
 		middlewares: [logger],
 		routes: [
-			{ path: "/", name: "home", component: navbar },
+			{ path: "/catalogo/profesiones", name: "profesiones", component: {
+				html: '<h1>Catálogo de Profesiones</h1>'
+			} },
 			// { path: "/users", name: "users", component: UsersList },
 			// { path: "/users/:id", name: "user-detail", component: UserDetail },
 			// {

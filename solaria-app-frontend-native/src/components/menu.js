@@ -1,4 +1,4 @@
-import { MENU_OPTIONS } from "../constants/const-menu";
+import { MENU_OPTIONS } from "../constants/menu";
 
 /**
  * Filtra las opciones de menú según el rol y construye el menú.
@@ -15,7 +15,7 @@ function createMenuContainer(menu) {
 	const container = createElement("div");
 	const section = createElement("section", {
 		className:
-			"fixed top-0 left-0 h-screen max-w-xs w-full z-50 overflow-y-auto bg-gray-900 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900 shadow-2xl shadow-gray-900/80",
+			"fixed hidden top-0 left-0 h-screen max-w-xs w-full z-50 overflow-y-auto bg-gray-900 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900 shadow-2xl shadow-gray-900/80",
 			id: "menu-container",
 	});
 	const menuList = createElement("ul", { id: "menu", className: "p-2" });
@@ -41,7 +41,7 @@ function createMenuHeader() {
 	});
 	const title = createElement("p", {
 		className: "text-4xl text-gray-100 font-semibold",
-		textContent: "Menu Oraculo",
+		textContent: "El Oráculo",
 	});
 	const icon = createElement("i", {
 		className: "fa-solid fa-xmark text-3xl text-gray-100",
@@ -78,6 +78,13 @@ function closeMenu(headerContainer) {
 	);
 }
 
+function closeMenuListener(element){
+	element.addEventListener('click', () => {
+		const menuContainer = document.getElementById("menu-container");
+		if (menuContainer) closeMenu(menuContainer.firstChild);
+	});
+}
+
 /**
  * Crea un elemento de opción de menú basado en el objeto proporcionado.
  *
@@ -93,14 +100,17 @@ function createMenuOption(option) {
 		id: option.id,
 		className: "w-full bg-gray-700 rounded mb-1",
 	});
+	
 	const a = createElement("a", {
 		className:
 			"px-4 py-2 block text-gray-100 text-2xl hover:text-white w-full h-full cursor-pointer",
 		textContent: option.name,
 	});
+
 	if (option.path) {
 		a.href = option.path;
 		li.classList.add("hover:bg-gray-600");
+		closeMenuListener(a);
 	}
 	li.appendChild(a);
 
@@ -131,6 +141,7 @@ function createSubMenu(children) {
 		});
 		subLi.appendChild(subA);
 		subMenuUl.appendChild(subLi);
+		closeMenuListener(subA);
 	});
 	return subMenuUl;
 }

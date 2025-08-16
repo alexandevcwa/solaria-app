@@ -13,15 +13,16 @@ export default function Menu({ role }) {
 
 function createMenuContainer(menu) {
 	const container = createElement("div");
-	const nav = createElement("section", {
+	const section = createElement("section", {
 		className:
-			"h-screen max-w-xs overflow-y-scroll scroll-smooth scroll-m-0 scroll-p-0 bg-cyan-900",
+			"fixed top-0 left-0 h-screen max-w-xs w-full z-50 overflow-y-auto bg-gray-900 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900 shadow-2xl shadow-gray-900/80",
+			id: "menu-container",
 	});
 	const menuList = createElement("ul", { id: "menu", className: "p-2" });
 
-	container.appendChild(nav);
-	nav.appendChild(createMenuHeader());
-	nav.appendChild(menuList);
+	container.appendChild(section);
+	section.appendChild(createMenuHeader());
+	section.appendChild(menuList);
 
 	menu.forEach((option) => {
 		menuList.appendChild(createMenuOption(option));
@@ -36,11 +37,11 @@ function createMenuContainer(menu) {
  */
 function createMenuHeader() {
 	const container = createElement("div", {
-		className: "flex justify-between items-center px-2 py-1",
+		className: "menu-title flex justify-between items-center pl-4 pr-2 pt-2 py-1",
 	});
 	const title = createElement("p", {
-		className: "text-2xl text-gray-100 font-semibold",
-		textContent: "U-Solaria",
+		className: "text-4xl text-gray-100 font-semibold",
+		textContent: "Menu Oraculo",
 	});
 	const icon = createElement("i", {
 		className: "fa-solid fa-xmark text-3xl text-gray-100",
@@ -71,7 +72,7 @@ function closeMenu(headerContainer) {
 	nav.addEventListener(
 		"animationend",
 		() => {
-			nav.style.display = "none";
+			nav.style.display = "hidden";
 		},
 		{ once: true }
 	);
@@ -90,16 +91,16 @@ function closeMenu(headerContainer) {
 function createMenuOption(option) {
 	const li = createElement("li", {
 		id: option.id,
-		className: "w-full bg-cyan-800 rounded mb-1",
+		className: "w-full bg-gray-700 rounded mb-1",
 	});
 	const a = createElement("a", {
 		className:
-			"px-4 py-2 block text-gray-100 hover:text-white w-full h-full cursor-pointer",
+			"px-4 py-2 block text-gray-100 text-2xl hover:text-white w-full h-full cursor-pointer",
 		textContent: option.name,
 	});
 	if (option.path) {
 		a.href = option.path;
-		li.classList.add("hover:bg-cyan-700");
+		li.classList.add("hover:bg-gray-600");
 	}
 	li.appendChild(a);
 
@@ -121,11 +122,11 @@ function createSubMenu(children) {
 	const subMenuUl = createElement("ul", { className: "ml-3 hidden" });
 	children.forEach((subOption) => {
 		const subLi = createElement("li", {
-			className: "w-full bg-cyan-700 rounded hover:bg-cyan-600",
+			className: "w-full bg-gray-600 rounded hover:bg-gray-500",
 		});
 		const subA = createElement("a", {
 			href: subOption.path,
-			className: "px-4 py-2 block text-gray-100 hover:text-white w-full h-full",
+			className: "px-4 py-2 text-xl block text-gray-100 hover:text-white w-full h-full",
 			textContent: subOption.name,
 		});
 		subLi.appendChild(subA);

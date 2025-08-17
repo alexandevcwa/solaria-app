@@ -15,8 +15,8 @@ function createMenuContainer(menu) {
 	const container = createElement("div");
 	const section = createElement("section", {
 		className:
-			"fixed hidden top-0 left-0 h-screen max-w-xs w-full z-50 overflow-y-auto bg-gray-900 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900 shadow-2xl shadow-gray-900/80",
-			id: "menu-container",
+			"fixed hidden top-0 left-0 h-screen max-w-xs w-full z-50 overflow-y-auto bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900 shadow-2xl shadow-gray-900/80",
+		id: "menu-container",
 	});
 	const menuList = createElement("ul", { id: "menu", className: "p-2" });
 

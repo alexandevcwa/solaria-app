@@ -1,17 +1,16 @@
-import tableCell from "./table-cell";
+import TableCellComponent from "./table-cell";
 
-export default function tableRow(object, order) {
-	return (
-		<tr className="hover:bg-indigo-50 transition">
-			{order.map((ord, index) => getCellContent(object, ord, index))}
-		</tr>
-	);
-}
+export default function TableRowComponent({object, order}) {
+	const tr = document.createElement("tr");
+	tr.className = "bg-white border-b border-gray-200 hover:bg-gray-100 transition duration-150";
 
-function getCellContent(object, ord, index) {
-	if (Object.keys(object).includes(ord)) {
-		const entry = Object.entries(object).find(([key]) => key === ord)?.[1];
-		return tableCell(entry);
-	}
-	return "";
+	order.forEach((o) => {
+		const value = Object.keys(object).includes(o)
+			? Object.entries(object).find(([key]) => key === o)?.[1]
+			: "";
+		const td = TableCellComponent(value);
+		tr.appendChild(td);
+	});
+
+	return tr;
 }

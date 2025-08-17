@@ -1,5 +1,6 @@
-export default function tableCell(value){
-    return `
-        <td class="px-3 py-2 text-gray-700 font-medium">${value}</td>
-    `;
+export default function TableCellComponent(value) {
+	const cell = document.createElement("td");
+    cell.className = "px-3 py-2 text-gray-700 font-medium";
+    cell.textContent = value;
+    return cell;
 }

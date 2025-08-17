@@ -14,10 +14,24 @@
 	font-style: normal;
 }
 
+@font-face {
+	font-family: "Enchanted-Land";
+	src: url("../src//assets/font/Enchanted-Land.otf") format("opentype");
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "Tango-Sans";
+	src: url("../src//assets/font/TangoSans.ttf") format("opentype");
+	font-weight: normal;
+	font-style: normal;
+}
+
 .font-title{
     font-family: "Olondona";
 }
 
 html{
-    font-family: "Enchanted-Land";
+    /* font-family: ""; */
 }

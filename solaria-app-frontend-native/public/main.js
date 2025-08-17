@@ -125,6 +125,11 @@ async function logger(ctx) {
 // Crear router cuando el DOM está listo
 
 import Navbar from "../src/components/navbar";
+import { ROUTES } from "../src/constants/routes";
+import { Notyf } from 'notyf';
+import 'notyf/notyf.min.css'
+
+var notyf = new Notyf
 
 window.addEventListener("DOMContentLoaded", () => {
 	
@@ -145,21 +150,22 @@ window.addEventListener("DOMContentLoaded", () => {
 		outlet,
 		base: "/",
 		middlewares: [logger],
-		routes: [
-			{ path: "/catalogo/profesiones", name: "profesiones", component: {
-				html: '<h1>Catálogo de Profesiones</h1>'
-			} },
-			// { path: "/users", name: "users", component: UsersList },
-			// { path: "/users/:id", name: "user-detail", component: UserDetail },
-			// {
-			// 	path: "/acceso",
-			// 	name: "private",
-			// 	beforeEnter: requireAuth,
-			// 	component: PrivateArea,
-			// },
-			// { path: "/login", name: "login", component: Login },
-			// { path: "*", name: "404", component: NotFound }, // catch-all
-		],
+		routes: ROUTES 
+		// [
+		// 	{ path: "/catalogo/profesiones", name: "profesiones", component: {
+		// 		html: '<h1>Catálogo de Profesiones</h1>'
+		// 	} },
+		// 	// { path: "/users", name: "users", component: UsersList },
+		// 	// { path: "/users/:id", name: "user-detail", component: UserDetail },
+		// 	// {
+		// 	// 	path: "/acceso",
+		// 	// 	name: "private",
+		// 	// 	beforeEnter: requireAuth,
+		// 	// 	component: PrivateArea,
+		// 	// },
+		// 	// { path: "/login", name: "login", component: Login },
+		// 	// { path: "*", name: "404", component: NotFound }, // catch-all
+		// ],
 	});
 
 	// Exponer global para pruebas en consola

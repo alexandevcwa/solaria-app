@@ -2,6 +2,7 @@ import Menu from "./menu";
 
 export default function Navbar({ userName, role }) {
 	const nav = document.createElement("nav");
+	nav.className = "top-0 z-50 bg-gray-900";
 
 	nav.appendChild(createNav());
 	nav.appendChild(Menu({ role: role }));
@@ -11,7 +12,7 @@ export default function Navbar({ userName, role }) {
 function createNav() {
 	const container = document.createElement("div");
 	container.className =
-		"flex items-center justify-between h-14 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-600 border-b-2 border-gray-800 shadow-lg";
+		"flex items-center justify-between h-14 bg-gradient-to-r from-gray-900 via-blue-900 to-gray-700 border-b-2 border-gray-800 shadow-lg";
 	container.appendChild(createMenuButton());
 	container.appendChild(createNavSubContainer());
 	return container;

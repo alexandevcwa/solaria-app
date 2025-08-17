@@ -15,7 +15,7 @@ function createMenuContainer(menu) {
 	const container = createElement("div");
 	const section = createElement("section", {
 		className:
-			"fixed hidden top-0 left-0 h-screen max-w-xs w-full z-50 overflow-y-auto bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900 shadow-2xl shadow-gray-900/80",
+			"fixed hidden top-0 left-0 h-screen max-w-xs w-full z-50 overflow-y-auto bg-gradient-to-b from-gray-900 via-blue-900 to-gray-700 scrollbar-thin scrollbar-thumb-blue-800 scrollbar-track-gray-900 shadow-2xl shadow-blue-900/80",
 		id: "menu-container",
 	});
 	const menuList = createElement("ul", { id: "menu", className: "p-2" });
@@ -40,8 +40,8 @@ function createMenuHeader() {
 		className: "menu-title flex justify-between items-center pl-4 pr-2 pt-2 py-1",
 	});
 	const title = createElement("p", {
-		className: "text-4xl text-gray-100 font-semibold",
-		textContent: "El Oráculo",
+		className: "text-xl text-gray-100 font-semibold",
+		textContent: "Menú",
 	});
 	const icon = createElement("i", {
 		className: "fa-solid fa-xmark text-3xl text-gray-100",
@@ -98,18 +98,18 @@ function closeMenuListener(element){
 function createMenuOption(option) {
 	const li = createElement("li", {
 		id: option.id,
-		className: "w-full bg-gray-700 rounded mb-1",
+		className: "w-full bg-blue-950 rounded mb-1 border border-blue-900 hover:bg-blue-900 transition-colors",
 	});
 	
 	const a = createElement("a", {
 		className:
-			"px-4 py-2 block text-gray-100 text-2xl hover:text-white w-full h-full cursor-pointer",
+			"px-4 py-2 block text-gray-100 hover:text-white w-full h-full cursor-pointer",
 		textContent: option.name,
 	});
 
 	if (option.path) {
 		a.href = option.path;
-		li.classList.add("hover:bg-gray-600");
+		li.classList.add("hover:bg-blue-900");
 		closeMenuListener(a);
 	}
 	li.appendChild(a);
@@ -132,11 +132,11 @@ function createSubMenu(children) {
 	const subMenuUl = createElement("ul", { className: "ml-3 hidden" });
 	children.forEach((subOption) => {
 		const subLi = createElement("li", {
-			className: "w-full bg-gray-600 rounded hover:bg-gray-500",
+			className: "w-full rounded hover:bg-blue-800",
 		});
 		const subA = createElement("a", {
 			href: subOption.path,
-			className: "px-4 py-2 text-xl block text-gray-100 hover:text-white w-full h-full",
+			className: "px-6 py-2 block text-gray-100 hover:text-white w-full h-full",
 			textContent: subOption.name,
 		});
 		subLi.appendChild(subA);

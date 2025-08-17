@@ -7,26 +7,27 @@ const notyf = new Notyf();
 export default function CatalogoProfesiones() {
 	return {
 		html: `
-            <div class="container mx-auto px-2 py-6">
-                <div id="catalogo-container" class="bg-white/80 backdrop-blur-lg border border-gray-200 rounded-xl shadow-lg overflow-hidden">
+            <div class="container mx-auto">
+                <div id="catalogo-container" class="overflow-hidden">
                 </div>
             </div>
     `,
 		onMount(root) {
-			profesionesService.getAll().then((profesiones) => {
-                const tableHtml = render(profesiones);
-                root.querySelector("#catalogo-container").innerHTML = tableHtml;
-                animateIn();
-                notyf.success({
-                    message: "Profesiones cargadas exitosamente"
-                });
-
-            })
-            .catch((error) => {
-                notyf.error({
-                    message: error.message
-                });
-            })
+			profesionesService
+				.getAll()
+				.then((profesiones) => {
+					const component = render(profesiones);
+					root.querySelector("#catalogo-container").appendChild(component);
+					animateIn();
+					notyf.success({
+						message: "Profesiones cargadas exitosamente",
+					});
+				})
+				.catch((error) => {
+					notyf.error({
+						message: error.message,
+					});
+				});
 		},
 	};
 }
@@ -37,17 +38,32 @@ function render(profesiones) {
 		objects: profesiones,
 		order: TABLE_ORDER,
 		name: "Catálogo de Profesiones",
+		functions: [
+			{
+				name: "+ Agrear Profesión",
+				onClick: () => {
+					notyf.success({
+						message: "Funcionalidad en desarrollo",
+					});
+				},
+			},
+			{
+				name: "Profesioines Desactivadas",
+				onClick: () => {
+					console.log("Agregar Profesión");
+				},
+			},
+		],
 	});
-    return component.innerHTML;
+	return component;
 }
 
-function animateIn(){
-    const table = document.getElementById("catalogo-container");
-    if (table) {
-        table.classList.add("animate__animated", "animate__fadeIn");
-    }
-
+function animateIn() {
+	const table = document.getElementById("catalogo-container");
+	if (table) {
+		table.classList.add("animate__animated", "animate__fadeIn");
+	}
 }
 
-const TABLE_HEADERS = ["ID", "NOMBRE PROFESIÓN", "ACCIONES","DEFINICINOES"];
+const TABLE_HEADERS = ["ID", "NOMBRE PROFESIÓN"];
 const TABLE_ORDER = ["id", "nombre"];

@@ -15,15 +15,22 @@
 }
 
 @font-face {
-	font-family: "Enchanted-Land";
-	src: url("../src//assets/font/Enchanted-Land.otf") format("opentype");
+	font-family: "Tango-Sans";
+	src: url("../src//assets/font/TangoSans.ttf") format("opentype");
 	font-weight: normal;
 	font-style: normal;
 }
 
 @font-face {
-	font-family: "Tango-Sans";
-	src: url("../src//assets/font/TangoSans.ttf") format("opentype");
+	font-family: "Inter";
+	src: url("../src//assets/font/Inter.ttf") format("opentype");
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "Noto Sans";
+	src: url("../src//assets/font/NotoSans-Variable.ttf") format("opentype");
 	font-weight: normal;
 	font-style: normal;
 }
@@ -33,5 +40,5 @@
 }
 
 html{
-    /* font-family: ""; */
+    font-family: "Noto Sans";
 }

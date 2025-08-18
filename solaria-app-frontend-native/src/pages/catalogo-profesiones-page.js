@@ -31,7 +31,7 @@ function render(root) {
 		callback: getTableData,
 		order: TABLE_ORDER,
 		name: "Catálogo de Profesiones",
-		functions: TABLE_FUNCTIONS
+		functions: TABLE_FUNCTIONS,
 	});
 
 	root.querySelector("#catalogo-container").appendChild(component);
@@ -49,6 +49,7 @@ async function getTableData() {
 	try {
 		const profesiones = await profesionesService.getAll();
 		notyf.success("Profesiones cargadas exitosamente");
+		animateTableInit();
 		return profesiones;
 	} catch (error) {
 		notyf.error(error.message || "Error al cargar profesiones");
@@ -63,9 +64,19 @@ const TABLE_FUNCTIONS = [
 	},
 	{
 		label: "Profesiones Desabilitadas",
-		callback: disableProfession
+		callback: disableProfession,
 	},
 ];
+
+function animateTableInit() {
+	const table = document.getElementById("catalogo-container");
+	if (table) {
+		table.classList.add("animate__animated", "animate__fadeIn");
+	}
+	table.addEventListener("animationend", () => {
+		table.classList.remove("animate__animated", "animate__fadeIn");
+	});
+}
 
 function addNewProfession() {}
 

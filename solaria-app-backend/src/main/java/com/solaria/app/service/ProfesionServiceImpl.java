@@ -65,7 +65,7 @@ public class ProfesionServiceImpl implements ProfesionService {
 
     @Override
     @Transactional
-    public void changeStatus(int id, boolean status) {
+    public void changeStatus(int id, boolean status) {  
         Profesion profesion = profesionRepository.findById(id).orElse(null);
         if (null == profesion) {
             throw new ServiceException(HttpStatus.BAD_REQUEST, "Profesión no existe para cambiar estado");
@@ -82,7 +82,7 @@ public class ProfesionServiceImpl implements ProfesionService {
     public Iterable<ProfesionDto> getAllByStatus(boolean status) {
 
         List<Profesion> profesiones = profesionRepository.getAllByEstado(status);
-        if (!profesiones.isEmpty()) {
+        if (profesiones.isEmpty()) {
             throw new ServiceException(HttpStatus.NOT_FOUND, "No existen profesiones registradas");
         }
         return profesiones.stream().map(ProfesionMapper::toDto).toList();

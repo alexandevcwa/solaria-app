@@ -54,7 +54,9 @@ async function getTableData() {
 		animateTableInit();
 		return profesiones;
 	} catch (error) {
-		notyf.error(error.message || "Error al cargar profesiones");
+		console.error("Error al cargar profesiones:", error);
+		const message = `${error.response.data.code} - ${error.response.data.message}`;
+		notyf.error(message || "Error al cargar profesiones");
 		return null;
 	}
 }

@@ -5,7 +5,7 @@ import TableFunctionComponent from "./table-function";
 function createTableInfo(name, functions) {
 	const tableInfo = document.createElement("div");
 	tableInfo.className =
-		"px-4 py-3 border-b border-gray-300 flex items-center justify-between bg-gray-100";
+		"px-2 sm:px-4 py-2 sm:py-3 border-b border-gray-300 flex flex-col sm:flex-row items-start sm:items-center justify-between bg-gray-100 gap-2";
 
 	const title = document.createElement("h2");
 	title.className = "text-xl font-semibold text-gray-800 tracking-wide";
@@ -21,6 +21,7 @@ function createTableInfo(name, functions) {
 
 function createFunctionsContainer(functions) {
 	const functionsContainer = document.createElement("div");
+	functionsContainer.className = "flex flex-wrap gap-2 w-full sm:w-auto";
 	functions.forEach((f) => {
 		const button = TableFunctionComponent({ label: f.label, callback: f.callback });
 		functionsContainer.appendChild(button);

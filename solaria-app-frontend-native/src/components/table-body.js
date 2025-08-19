@@ -17,6 +17,7 @@ export default function TableBodyComponent({ objects, order, actions = null }) {
 		const component = TableRowComponent({
 			object: element,
 			order: order,
+			actions: actions,
 			
 		});
 		tbody.appendChild(component.tr);

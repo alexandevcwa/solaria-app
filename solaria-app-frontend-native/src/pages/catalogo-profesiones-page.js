@@ -1,6 +1,7 @@
 import { profesionesService } from "../services/catalogo-profesiones-api";
 import TableComponent from "../components/table";
 import { Notyf } from "notyf";
+import { TableRowActionType } from "../components/constants/table-row-action-type";
 
 const notyf = new Notyf();
 const TABLE_HEADERS = ["ID", "NOMBRE PROFESIÓN", "Acciones"];
@@ -32,6 +33,7 @@ function render(root) {
 		order: TABLE_ORDER,
 		name: "Catálogo de Profesiones",
 		functions: TABLE_FUNCTIONS,
+		actions: ROW_ACTIONS
 	});
 
 	root.querySelector("#catalogo-container").appendChild(component);
@@ -68,6 +70,24 @@ const TABLE_FUNCTIONS = [
 	},
 ];
 
+const ROW_ACTIONS = [
+	{
+		label: "Ver",
+		onClick: showProfession,
+		type: TableRowActionType.SELECT,
+	},
+	{
+		label: "Editar",
+		onClick: editProfession,
+		type: TableRowActionType.EDIT,
+	},
+	{
+		label: "Desabilitar",
+		onClick: disableProfession,
+		type: TableRowActionType.DELETE,
+	},
+];
+
 function animateTableInit() {
 	const table = document.getElementById("catalogo-container");
 	if (table) {
@@ -78,8 +98,21 @@ function animateTableInit() {
 	});
 }
 
-function addNewProfession() {}
+function showProfession(reactiveValue){
+	console.log("Mostrar", reactiveValue);
 
-function editProfession() {}
+}
 
-function disableProfession() {}
+function editProfession(reactive) {
+	reactive.id = 10;
+	notyf.success("Profesión editada exitosamente");
+	return reactive;
+}
+
+function disableProfession(reactive) {
+	notyf.success(`Profesión ${reactive.nombre} deshabilitada exitosamente`);
+}
+
+function addNewProfession(){
+
+}

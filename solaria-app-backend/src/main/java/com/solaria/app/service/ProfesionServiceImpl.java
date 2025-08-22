@@ -7,6 +7,7 @@ import com.solaria.app.model.Profesion;
 import com.solaria.app.repository.ProfesionRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -55,8 +56,8 @@ public class ProfesionServiceImpl implements ProfesionService {
     }
 
     @Override
-    public Iterable<ProfesionDto> findAll() {
-        List<Profesion> profesiones = profesionRepository.getAllByEstado(true);
+    public Iterable<ProfesionDto> findAll(Pageable pageable) {
+        List<Profesion> profesiones = profesionRepository.getAllByEstado(true, pageable);
         if (profesiones.isEmpty()) {
             throw new ServiceException(HttpStatus.NOT_FOUND, "No existen profesiones registradas");
         }
@@ -65,7 +66,7 @@ public class ProfesionServiceImpl implements ProfesionService {
 
     @Override
     @Transactional
-    public void changeStatus(int id, boolean status) {  
+    public void changeStatus(int id, boolean status) {
         Profesion profesion = profesionRepository.findById(id).orElse(null);
         if (null == profesion) {
             throw new ServiceException(HttpStatus.BAD_REQUEST, "Profesión no existe para cambiar estado");
@@ -79,9 +80,9 @@ public class ProfesionServiceImpl implements ProfesionService {
     }
 
     @Override
-    public Iterable<ProfesionDto> getAllByStatus(boolean status) {
+    public Iterable<ProfesionDto> getAllByStatus(boolean status, Pageable pageable) {
 
-        List<Profesion> profesiones = profesionRepository.getAllByEstado(status);
+        List<Profesion> profesiones = profesionRepository.getAllByEstado(status, pageable);
         if (profesiones.isEmpty()) {
             throw new ServiceException(HttpStatus.NOT_FOUND, "No existen profesiones registradas");
         }

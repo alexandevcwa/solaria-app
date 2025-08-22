@@ -3,12 +3,12 @@ import { Profesion } from "../models/profesion";
 import { API_BASE_URL } from "../constants/api";
 import { Response } from "../models/response";
 
-export const profesionesService = {
-	async getAll() {
-		const response = await axios.get(`${API_BASE_URL}/profesiones`);
+export const ProfesionesService = {
+	async getAll({page,size}) {
+		const response = await axios.get(`${API_BASE_URL}/profesiones?page=${page}&size=${size}`);
 		return response.data.map((profesionData) => new Profesion(profesionData));
 	},
-	async postProfesion(profesion) {
+	async postProfesion({profesion}) {
 		const response = await axios.post(
 			`${API_BASE_URL}/profesiones`,
 			profesion.toJSON()

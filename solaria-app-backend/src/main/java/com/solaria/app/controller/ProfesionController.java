@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -66,13 +67,14 @@ public class ProfesionController {
 
     @GetMapping
     @Operation(summary = "Obtener todas las profesiones")
-    public ResponseEntity<Iterable<ProfesionDto>> getAllProfesiones(@RequestParam(value = "estado", required = false) Boolean estado){
+    public ResponseEntity<Iterable<ProfesionDto>> getAllProfesiones(@RequestParam(value = "estado", required = false) Boolean estado,
+                                                                    Pageable pageable) {
 
         if (null == estado) {
-            return ResponseEntity.ok(profesionService.findAll());
+            return ResponseEntity.ok(profesionService.findAll(pageable));
         }
 
-        return ResponseEntity.ok(profesionService.getAllByStatus(estado));
+        return ResponseEntity.ok(profesionService.getAllByStatus(estado,pageable));
     }
 
     @GetMapping("/{id}")

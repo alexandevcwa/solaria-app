@@ -1,5 +1,7 @@
 package com.solaria.app.service;
 
+import org.springframework.data.domain.Pageable;
+
 public interface ICRUDService <T,ID>{
 
     T save(T entity);
@@ -10,6 +12,6 @@ public interface ICRUDService <T,ID>{
 
     T findById(ID id);
 
-    Iterable<T> findAll();
+    Iterable<T> findAll(Pageable pageable);
 
 }

@@ -11,9 +11,7 @@ public final class ProfesionMapper {
 
     public static  Profesion toEntity(ProfesionDto dto) {
         return Profesion.builder()
-                .codigo(dto.id())
                 .nombre(dto.nombre().toUpperCase())
                 .build();
     }
-
 }

@@ -16,7 +16,7 @@ public class Profesion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "prof_cod")
-    private int codigo;
+    private Integer codigo;
 
     @Column(name = "prof_nom", unique = true, nullable = false, length = 50)
     private String nombre;

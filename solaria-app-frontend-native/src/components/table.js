@@ -23,15 +23,18 @@ function createFunctionsContainer(functions) {
 	const functionsContainer = document.createElement("div");
 	functionsContainer.className = "flex flex-wrap gap-2 w-full sm:w-auto";
 	functions.forEach((f) => {
-		const button = TableFunctionComponent({ label: f.label, callback: f.callback });
+		const button = TableFunctionComponent({
+			label: f.label,
+			callback: f.callback,
+		});
 		functionsContainer.appendChild(button);
 	});
 	return functionsContainer;
 }
 
-function createTable(headers, callback, order, actions) {
+function createTable(headers, callback, order, actions, pageable) {
 	const table = document.createElement("table");
-	table.className = "min-w-full text-sm text-left text-gray-700 table-fixed";
+	table.className = "min-w-full text-sm text-left text-gray-700";
 	const thead = TableHeadComponent(headers);
 	table.appendChild(thead);
 
@@ -64,6 +67,7 @@ export default function TableComponent({
 	order,
 	actions = null,
 	functions = null,
+	pageable = false,
 }) {
 	const container = document.createElement("div");
 	container.className = "container px-2 py-6";
@@ -76,7 +80,7 @@ export default function TableComponent({
 	subContainer.appendChild(createTableInfo(name, functions));
 
 	const scrollContainer = document.createElement("div");
-	scrollContainer.className = "max-h-96 overflow-y-auto -mt-px";
+	scrollContainer.className = "-mt-px";
 	scrollContainer.appendChild(createTable(headers, callback, order, actions));
 
 	subContainer.appendChild(scrollContainer);

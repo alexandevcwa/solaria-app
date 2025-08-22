@@ -1,120 +1,129 @@
-import { profesionesService } from "../services/catalogo-profesiones-api";
+import { ProfesionesService } from "../services/catalogo-profesiones-api";
 import TableComponent from "../components/table";
 import { Notyf } from "notyf";
 import { TableRowActionType } from "../components/constants/table-row-action-type";
+import AddProfesionForm from "../modules/module-professions/form-add-profession";
 
 const notyf = new Notyf();
-const TABLE_HEADERS = ["ID", "NOMBRE PROFESIÓN", "Acciones"];
-const TABLE_ORDER = ["id", "nombre"];
+const TABLE_CONFIG = {
+	headers: ["ID", "NOMBRE PROFESIÓN", "Acciones"],
+	order: ["id", "nombre"],
+	name: "Catálogo de Profesiones",
+	containerId: "catalogo-container",
+	addDialogId: "add-profesion-dialog",
+	animationClass: "animate__fadeIn",
+};
 
 export default function CatalogoProfesiones() {
 	return {
 		html: `
-            <div class="container mx-auto">
-                <div id="catalogo-container" class="overflow-hidden">
-                </div>
-            </div>
-    `,
+			<div class="container mx-auto">
+				<div id="${TABLE_CONFIG.containerId}" class="overflow-hidden"></div>
+			</div>
+		`,
 		onMount(root) {
-			render(root);
+			renderTable(root);
+			renderAddProfessionForm(root);
 		},
 	};
 }
 
-/**
- * Renders the "Catálogo de Profesiones" table component inside the specified root element.
- *
- * @param {HTMLElement} root - The root DOM element where the table component will be appended.
- */
-function render(root) {
-	const component = TableComponent({
-		headers: TABLE_HEADERS,
-		callback: getTableData,
-		order: TABLE_ORDER,
-		name: "Catálogo de Profesiones",
-		functions: TABLE_FUNCTIONS,
-		actions: ROW_ACTIONS
+function renderTable(root) {
+	const table = TableComponent({
+		headers: TABLE_CONFIG.headers,
+		callback: fetchTableData,
+		order: TABLE_CONFIG.order,
+		name: TABLE_CONFIG.name,
+		functions: getTableFunctions(),
+		actions: getRowActions(),
 	});
-
-	root.querySelector("#catalogo-container").appendChild(component);
+	root.querySelector(`#${TABLE_CONFIG.containerId}`).appendChild(table);
 }
 
-/**
- * Obtiene los datos de la tabla de profesiones llamando al servicio correspondiente.
- * Muestra una notificación de éxito si la carga es exitosa, o una notificación de error si ocurre algún problema.
- *
- * @async
- * @function
- * @returns {Promise<Array<Object>|null>} Retorna un arreglo de profesiones si la carga es exitosa, o null si ocurre un error.
- */
-async function getTableData() {
+function renderAddProfessionForm(root) {
+	root.appendChild(AddProfesionForm(TABLE_CONFIG.addDialogId));
+}
+
+async function fetchTableData() {
 	try {
-		const profesiones = await profesionesService.getAll();
+		const profesiones = await ProfesionesService.getAll({page: 0, size: 12});
 		notyf.success("Profesiones cargadas exitosamente");
-		animateTableInit();
+		animateTable(TABLE_CONFIG.containerId, TABLE_CONFIG.animationClass);
 		return profesiones;
 	} catch (error) {
-		console.error("Error al cargar profesiones:", error);
-		const message = `${error.response.data.code} - ${error.response.data.message}`;
-		notyf.error(message || "Error al cargar profesiones");
+		handleError(error, "Error al cargar profesiones");
 		return null;
 	}
 }
 
-const TABLE_FUNCTIONS = [
-	{
-		label: "+ Agregar Profesión",
-		callback: addNewProfession,
-	},
-	{
-		label: "Profesiones Desabilitadas",
-		callback: disableProfession,
-	},
-];
+function getTableFunctions() {
+	return [
+		{
+			label: "+ Agregar Profesión",
+			callback: showAddProfessionForm,
+		},
+		{
+			label: "Profesiones Deshabilitadas",
+			callback: disableProfession,
+		},
+	];
+}
 
-const ROW_ACTIONS = [
-	{
-		label: "Ver",
-		onClick: showProfession,
-		type: TableRowActionType.SELECT,
-	},
-	{
-		label: "Editar",
-		onClick: editProfession,
-		type: TableRowActionType.EDIT,
-	},
-	{
-		label: "Desabilitar",
-		onClick: disableProfession,
-		type: TableRowActionType.DELETE,
-	},
-];
+function getRowActions() {
+	return [
+		{
+			label: "Ver",
+			onClick: showProfession,
+			type: TableRowActionType.SELECT,
+		},
+		{
+			label: "Editar",
+			onClick: editProfession,
+			type: TableRowActionType.EDIT,
+		},
+		{
+			label: "Deshabilitar",
+			onClick: disableProfession,
+			type: TableRowActionType.DELETE,
+		},
+	];
+}
 
-function animateTableInit() {
-	const table = document.getElementById("catalogo-container");
-	if (table) {
-		table.classList.add("animate__animated", "animate__fadeIn");
-	}
+function animateTable(containerId, animationClass) {
+	const table = document.getElementById(containerId);
+	if (!table) return;
+	table.classList.add("animate__animated", animationClass);
 	table.addEventListener("animationend", () => {
-		table.classList.remove("animate__animated", "animate__fadeIn");
-	});
+		table.classList.remove("animate__animated", animationClass);
+	}, { once: true });
 }
 
-function showProfession(reactiveValue){
-	console.log("Mostrar", reactiveValue);
-
+function showProfession(profesion) {
+	console.log("Mostrar profesión:", profesion);
 }
 
-function editProfession(reactive) {
-	reactive.id = 10;
+function editProfession(profesion) {
+	// Aquí deberías implementar la lógica real de edición
 	notyf.success("Profesión editada exitosamente");
-	return reactive;
+	return profesion;
 }
 
-function disableProfession(reactive) {
-	notyf.success(`Profesión ${reactive.nombre} deshabilitada exitosamente`);
+function disableProfession(profesion) {
+	notyf.success(`Profesión ${profesion.nombre} deshabilitada exitosamente`);
 }
 
-function addNewProfession(){
+function showAddProfessionForm() {
+	const formModal = document.getElementById(TABLE_CONFIG.addDialogId);
+	if (formModal) {
+		formModal.classList.remove("opacity-0", "pointer-events-none");
+		formModal.querySelector("div").classList.remove("scale-95");
+	}
+}
 
+function handleError(error, defaultMsg) {
+	const message = error?.response?.data
+		? `${error.response.data.code} - ${error.response.data.message}`
+		: defaultMsg;
+	notyf.error(message);
+	console.error(message, error);
 }
